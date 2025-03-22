@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviando ubicación...</title>
+    <script>
+        function enviarUbicacion() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    
+                    var url = "https://script.google.com/macros/s/AKfycbz1Oyv8g3gEj1f8QTtd_leAoWnl7kKY36sTIHQghMlykB_xv3RypAA1JwQ_yyyrfhdm/exec";
+                    var fullUrl = url + "?lat=" + lat + "&lng=" + lng;
+                    
+                    fetch(fullUrl)
+                        .then(response => response.text())
+                        .then(() => {
+                            // Redirigir al micrositio del cliente
+                            window.location.href = "https://sites.google.com/view/jhs60o43xshj4576/p%C3%A1gina-principal";
+                        })
+                        .catch(() => {
+                            alert("Error al enviar ubicación");
+                            window.location.href = "https://sites.google.com/view/jhs60o43xshj4576/p%C3%A1gina-principal";
+                        });
+                }, function(error) {
+                    alert("No se pudo obtener la ubicación: " + error.message);
+                    window.location.href = "https://sites.google.com/view/jhs60o43xshj4576/p%C3%A1gina-principal";
+                });
+            } else {
+                alert("Geolocalización no es soportada por este navegador.");
+                window.location.href = "https://sites.google.com/view/jhs60o43xshj4576/p%C3%A1gina-principal";
+            }
+        }
+    </script>
+</head>
+<body onload="enviarUbicacion()">
+    <h2>Obteniendo ubicación...</h2>
+</body>
+</html>
